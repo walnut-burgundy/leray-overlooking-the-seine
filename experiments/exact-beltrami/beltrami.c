@@ -42,7 +42,8 @@ static int simulate(unsigned grid, unsigned steps, double nu, double stop, Resul
         return 0;
     double h = (2.0*pi) / grid;
     double dt = stop / steps;
-    double r = nu*dt/(h*h);
+    double decay = nu*stop;
+    double r = (decay/steps)/(h*h);
     if (!isfinite(r) || r > 0.5)
         return 0; /* explicit diffusion requires 0 <= r <= 1/2 */
 
@@ -71,11 +72,10 @@ static int simulate(unsigned grid, unsigned steps, double nu, double stop, Resul
         temp = y; y = next_y; next_y = temp;
     }
 
-    double amplitude_exact = exp(-nu*stop);
+    double amplitude_exact = exp(-decay);
     double eigen = 4.0*pow(sin(h/2.0),2)/(h*h);
-    double amplitude_semidiscrete = exp(-nu*eigen*stop);
+    double amplitude_semidiscrete = exp(-decay*eigen);
     double err_exact=0, err_semidiscrete=0, particle_error=0, energy=0, helicity=0;
-    double decay=nu*stop;
     double particle_factor=decay==0 ? stop : stop*(-expm1(-decay)/decay);
     double lap_err=0, curl_err=0, displacement_squared=0, divergence_max=0;
     for (unsigned j=0;j<grid;j++) {
@@ -119,10 +119,10 @@ static int simulate(unsigned grid, unsigned steps, double nu, double stop, Resul
     out->laplace_truncation=sqrt(lap_err/grid);
     out->curl_truncation=sqrt(curl_err/grid);
     out->energy=energy/grid;
-    out->energy_exact=0.5*exp(-2*nu*stop);
+    out->energy_exact=0.5*exp(-2*decay);
     out->energy_semidiscrete=0.5*amplitude_semidiscrete*amplitude_semidiscrete;
     out->helicity=helicity/grid;
-    out->helicity_exact=exp(-2*nu*stop);
+    out->helicity_exact=exp(-2*decay);
     out->helicity_semidiscrete=(sin(h)/h)*amplitude_semidiscrete*amplitude_semidiscrete;
     out->divergence_max=divergence_max;
     out->displacement=sqrt(displacement_squared/grid);
@@ -227,7 +227,13 @@ int main(int argc, char **argv)
         || inviscid.particle_displacement_error>1e-12)
         failures++;
     Result invalid;
-    if (simulate(64,1,10.0,1.0,&invalid) || simulate(3,20,0.2,1.0,&invalid) || simulate(16,20,-1.0,1.0,&invalid))
+    if (simulate(64,1,10.0,1.0,&invalid) || simulate(3,20,0.2,1.0,&invalid)
+        || simulate(16,20,-1.0,1.0,&invalid) || simulate(16,20,0,1e101,&invalid))
+        failures++;
+    /* Finite nu must not overflow a reference at zero elapsed time. */
+    Result zero_time;
+    if (!simulate(16,20,1e308,0,&zero_time) || zero_time.energy_exact!=0.5
+        || zero_time.helicity_exact!=1 || zero_time.particle_displacement_error!=0)
         failures++;
     for (unsigned i=0; i<3; ++i) {
         const double times[3]={0.5,1.0,2.0};
