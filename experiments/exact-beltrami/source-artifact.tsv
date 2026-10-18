@@ -1,0 +1,12 @@
+key	value
+job	SUN-LERAY-EXACT-01
+base	672ea01a7aa6e1d559a1ac55601b65696935caee
+archive	leray-verification.zip
+archive_sha256	b804351df2404ee9fbe7c898a4901a45fa07e9615e29083dbd8c2286cdff7df6
+fp_source_commit	0c2e9deb999d1a0cef1efe5fea5ee40eabfdfce7
+fp_import_local_commit	2107f1d93a230e3d3cb77fac38c67ae78040b3e1
+fp_import_pipeline	leray-exact-01-import
+fp_import_attempt	20261018T031012
+fp_import_result	PASS
+original_local_results	unaccepted-historical-evidence
+source_scope	reduced-periodic-exact-flow
