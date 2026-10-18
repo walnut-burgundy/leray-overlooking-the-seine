@@ -38,7 +38,7 @@ static int simulate(unsigned grid, unsigned steps, double nu, double stop, Resul
     /* Bound resources and keep the relative diagnostics representable. */
     if (grid < 8 || grid > 4096 || steps == 0 || steps > 2000000
         || (double)grid*steps > 200000000.0 || nu < 0 || stop < 0
-        || !isfinite(nu) || !isfinite(stop) || nu*stop > 300.0)
+        || !isfinite(nu) || !isfinite(stop) || stop > 1e100 || nu*stop > 300.0)
         return 0;
     double h = (2.0*pi) / grid;
     double dt = stop / steps;
@@ -75,7 +75,8 @@ static int simulate(unsigned grid, unsigned steps, double nu, double stop, Resul
     double eigen = 4.0*pow(sin(h/2.0),2)/(h*h);
     double amplitude_semidiscrete = exp(-nu*eigen*stop);
     double err_exact=0, err_semidiscrete=0, particle_error=0, energy=0, helicity=0;
-    double particle_factor=nu==0 ? stop : -expm1(-nu*stop)/nu;
+    double decay=nu*stop;
+    double particle_factor=decay==0 ? stop : stop*(-expm1(-decay)/decay);
     double lap_err=0, curl_err=0, displacement_squared=0, divergence_max=0;
     for (unsigned j=0;j<grid;j++) {
         unsigned l=j ? j-1 : grid-1;

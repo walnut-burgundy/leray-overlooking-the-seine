@@ -66,8 +66,8 @@ diagnostic/reference column and requires rejection of a truncated suite.
 The executable accepts no arguments (or `suite`) for the full suite, or
 `run GRID STEPS VISCOSITY FINAL_TIME` for one diagnostic case. It rejects
 nonfinite/negative viscosity or time, malformed integers, grids outside
-8…4096, zero/oversized step counts, νΔt/h² > ½, excessive work, and νt > 300.
-The last two are explicit resource/representability limits, not physical claims.
+8…4096, zero/oversized step counts, νΔt/h² > ½, excessive work, t > 10¹⁰⁰,
+and νt > 300. These bounds include explicit resource/representability limits.
 
 ## Provenance and limits
 
