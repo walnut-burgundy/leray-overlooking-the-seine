@@ -2,7 +2,7 @@
 
 Research date: 2026-10-12. **12 new source records, L164–L175; 22 located citation links and 2 explicitly editorial comparisons.** This follows all six leads left at the end of [the stochastic-Lagrangian continuation](stochastic-lagrangian-spider-continuation.md), then selected descendants. It is not an exhaustive recursive crawl.
 
-Inspection: **7 selected full-text inspections, 3 own-abstract inspections, 1 institutional reproduction of the original abstract, 1 metadata/partial-abstract record.** The [relationship register](../bibliography/cascades-generalized-flows-edges.json) preserves evidence and versions. No simulations, independent proof verification or FP/AICI acceptance occurred. Work remains on draft PR #4; no merge authorization is asserted.
+Inspection: **7 selected full-text inspections, 3 own-abstract inspections, 1 institutional reproduction of the original abstract, 1 metadata/partial-abstract record.** The [relationship register](../bibliography/cascades-generalized-flows-edges.json) preserves evidence and versions. No simulations, independent proof verification or FP/AICI acceptance occurred in this research pass. [walnut-burgundy/leray-overlooking-the-seine PR #4, “Continue Arnold–Khesin bibliography: geometric numerics, smooth reconnection, and local-to-global methods”](https://github.com/walnut-burgundy/leray-overlooking-the-seine/pull/4) was subsequently merged on 2026-10-12 at fc469475943a13b678757b434c20d053012c19a7. That merge does not establish numerical-benchmark or FP/AICI acceptance.
 
 ## Findings
 

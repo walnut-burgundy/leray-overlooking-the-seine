@@ -1,0 +1,9 @@
+all depends on build/beltrami build/beltrami-replay
+
+build/beltrami depends on beltrami.c
+    mkdir -p build
+    var compiler = ENV.ICK; "$compiler" -fno-link-libatomic -O2 -std=c11 -Wall -Wextra -Werror -pedantic -ffp-contract=off beltrami.c -lm -o build/beltrami
+
+build/beltrami-replay depends on beltrami.c
+    mkdir -p build
+    var compiler = ENV.ICK; "$compiler" -fno-link-libatomic -O2 -std=c11 -Wall -Wextra -Werror -pedantic -ffp-contract=off beltrami.c -lm -o build/beltrami-replay
